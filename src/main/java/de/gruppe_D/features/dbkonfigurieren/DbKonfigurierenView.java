@@ -6,6 +6,7 @@ public class DbKonfigurierenView extends JPanel {
     public JTextField usernameField = new JTextField(15);
     public JPasswordField passwordField = new JPasswordField(15);
     public JTextField portField = new JTextField(15);
+    public JTextField hostnameField = new JTextField(15);
     public JButton loginButton = new JButton("Speichern");
 
     public DbKonfigurierenView() {
@@ -17,7 +18,8 @@ public class DbKonfigurierenView extends JPanel {
         add(passwordField);
         add(new JLabel("Port"));
         add(portField);
+        add(new JLabel("hostname"));
+        add(hostnameField);
         add(loginButton);
-
     }
 }
