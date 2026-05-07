@@ -5,7 +5,7 @@ import de.gruppe_D.app.Router;
 import de.gruppe_D.features.auth.AuthService;
 import de.gruppe_D.features.auth.infrastructure.AuthRepository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
-import de.gruppe_D.features.dbkonfigurieren.infrastructure.DbKonfigurierenRepository;
+import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenRepository;
 
 import javax.sql.DataSource;
 
@@ -16,7 +16,7 @@ public class AppConfig {
     private AuthService authService;
     private DbKonfigurierenService dbKonfigurierenService;
     private AuthRepository authRepository;
-    private DbKonfigurierenRepository dbKonfigurierenRepository;
+    private DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository;
 
     // Repository
     public AuthRepository authRepository() {
@@ -26,9 +26,9 @@ public class AppConfig {
         return authRepository;
     }
 
-    public DbKonfigurierenRepository dbKonfigurierenRepository() {
+    public DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository() {
         if (dbKonfigurierenRepository == null) {
-            dbKonfigurierenRepository = new DbKonfigurierenRepository(databaseConnection());
+            dbKonfigurierenRepository = new DateiSpeichernDbKonfigurierenRepository();
         }
         return dbKonfigurierenRepository;
     }
