@@ -1,24 +1,28 @@
 package de.gruppe_D.features.dbkonfigurieren;
 
 public class DbKonfigurierenModel {
-    private Long id;
     private final String username;
     private final String password;
+    private final String port;
+    private final String hostname;
 
-    public DbKonfigurierenModel(Long id, String username, String password) {
-        this.id = id;
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Username darf nicht leer sein");
-        }
+    public DbKonfigurierenModel(String username, String password, String port, String hostname) {
         this.username = username;
         this.password = password;
-    }
-
-    public boolean checkPassword(String input) {
-        return password.equals(input);
+        this.port = port;
+        this.hostname = hostname;
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public String getPort() {
+        return this.port;
+    }
+    public String getHostname() {return this.hostname;}
 }
