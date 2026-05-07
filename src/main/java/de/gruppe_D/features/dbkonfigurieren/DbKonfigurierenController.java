@@ -2,6 +2,7 @@ package de.gruppe_D.features.dbkonfigurieren;
 
 import de.gruppe_D.app.Router;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 
 public class DbKonfigurierenController {
@@ -17,20 +18,17 @@ public class DbKonfigurierenController {
     }
 
     private void init() {
-        view.loginButton.addActionListener(login());
+        view.loginButton.addActionListener(DBAnmeldeinformationenSpeichern());
     }
 
-    private ActionListener login() {
+    private ActionListener DBAnmeldeinformationenSpeichern() {
         return e -> {
             String username = view.usernameField.getText();
+            String port = view.portField.getText();
             String password = new String(view.passwordField.getPassword());
-
-            if (dbKonfigurierenService.login(username, password)) {
-                router.showDashboard(); // 🔥 VIEW WECHSEL
-            } else {
-                System.out.println("Fehler!");
-                view.usernameField.setText("Fehler");
-            }
+            String hostnameField = view.hostnameField.getText();
+            dbKonfigurierenService.DBInfosSpeichern(username, port, password, hostnameField);
+            System.out.println("fertig");
         };
     }
 }
