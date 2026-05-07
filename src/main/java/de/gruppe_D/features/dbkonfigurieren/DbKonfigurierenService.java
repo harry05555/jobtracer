@@ -1,17 +1,17 @@
 package de.gruppe_D.features.dbkonfigurieren;
 
-import de.gruppe_D.features.dbkonfigurieren.interfaces.JdbcDbKonfigurierenRepository;
+import de.gruppe_D.features.dbkonfigurieren.interfaces.LokalDbKonfigurierenRepository;
 
 public class DbKonfigurierenService {
 
-    private final JdbcDbKonfigurierenRepository jdbcDbKonfigurierenRepository;
+    private final LokalDbKonfigurierenRepository dbKonfigurierenRepository;
 
-    public DbKonfigurierenService(JdbcDbKonfigurierenRepository userRepository) {
-        this.jdbcDbKonfigurierenRepository = userRepository;
+    public DbKonfigurierenService(LokalDbKonfigurierenRepository dbKonfigurierenRepository) {
+        this.dbKonfigurierenRepository = dbKonfigurierenRepository;
     }
 
-    public boolean login(String username, String password) {
-        DbKonfigurierenModel dbKonfigurierenModel = jdbcDbKonfigurierenRepository.findByUsernameInDB(username);
-        return dbKonfigurierenModel != null && dbKonfigurierenModel.checkPassword(password);
+    public void DBInfosSpeichern(String username, String password, String port, String hostname) {
+        DbKonfigurierenModel  konfigurieren  = new DbKonfigurierenModel(username, password, port, hostname);
+        dbKonfigurierenRepository.saveDatei(konfigurieren);
     }
 }
