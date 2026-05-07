@@ -5,7 +5,8 @@ import javax.swing.*;
 public class DbKonfigurierenView extends JPanel {
     public JTextField usernameField = new JTextField(15);
     public JPasswordField passwordField = new JPasswordField(15);
-    public JButton loginButton = new JButton("Login");
+    public JTextField portField = new JTextField(15);
+    public JButton loginButton = new JButton("Speichern");
 
     public DbKonfigurierenView() {
         setLayout(new java.awt.FlowLayout());
@@ -14,7 +15,8 @@ public class DbKonfigurierenView extends JPanel {
 
         add(new JLabel("Password"));
         add(passwordField);
-
+        add(new JLabel("Port"));
+        add(portField);
         add(loginButton);
 
     }
