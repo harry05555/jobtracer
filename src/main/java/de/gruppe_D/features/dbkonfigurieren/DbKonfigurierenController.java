@@ -27,7 +27,7 @@ public class DbKonfigurierenController {
             String port = view.portField.getText();
             String password = new String(view.passwordField.getPassword());
             String hostnameField = view.hostnameField.getText();
-            dbKonfigurierenService.DBInfosSpeichern(username, port, password, hostnameField);
+            dbKonfigurierenService.DBInfosSpeichern(username, password, port, hostnameField);
             System.out.println("fertig");
         };
     }
