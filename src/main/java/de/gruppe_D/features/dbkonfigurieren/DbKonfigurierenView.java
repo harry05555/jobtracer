@@ -8,6 +8,7 @@ public class DbKonfigurierenView extends JPanel {
     public JTextField portField = new JTextField(15);
     public JTextField hostnameField = new JTextField(15);
     public JButton loginButton = new JButton("Speichern");
+    public JButton verbindungTestButton = new JButton("Teste verbindung");
 
     public DbKonfigurierenView() {
         setLayout(new java.awt.FlowLayout());
@@ -21,5 +22,6 @@ public class DbKonfigurierenView extends JPanel {
         add(new JLabel("hostname"));
         add(hostnameField);
         add(loginButton);
+        add(verbindungTestButton);
     }
 }
