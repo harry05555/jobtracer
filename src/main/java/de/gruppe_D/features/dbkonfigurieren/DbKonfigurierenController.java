@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+import static de.gruppe_D.app.utils.UIUtils.*;
+
 public class DbKonfigurierenController {
     private final DbKonfigurierenView view;
     private final DbKonfigurierenService dbKonfigurierenService;
@@ -19,40 +21,54 @@ public class DbKonfigurierenController {
     }
 
     private void init() {
-        view.loginButton.addActionListener(DBAnmeldeinformationenSpeichern());
+        view.btnConnect.addActionListener(DBAnmeldeinformationenSpeichern());
         view.verbindungTestButton.addActionListener(verbindungsTest());
     }
 
     private ActionListener DBAnmeldeinformationenSpeichern() {
         return e -> {
-            String username = view.usernameField.getText();
-            String port = view.portField.getText();
-            String password = new String(view.passwordField.getPassword());
-            String hostnameField = view.hostnameField.getText();
-            dbKonfigurierenService.DBInfosSpeichern(username, password, port, hostnameField);
-            System.out.println("fertig");
+            String username = view.tfUser.getText();
+            String port = view.tfPort.getText();
+            String password = new String(view.pfPass.getPassword());
+            String hostnameField = view.tfHost.getText();
+
+
+            boolean erfolgreich = dbKonfigurierenService.verbindungTesten(username, password, port, hostnameField);
+
+            if (erfolgreich) {
+                view.tfUser.setBorder(BorderFactory.createLineBorder(COLOR_GREEN, 2));
+                view.tfPort.setBorder(BorderFactory.createLineBorder(COLOR_GREEN, 2));
+                view.pfPass.setBorder(BorderFactory.createLineBorder(COLOR_GREEN, 2));
+                view.tfHost.setBorder(BorderFactory.createLineBorder(COLOR_GREEN, 2));
+                dbKonfigurierenService.DBInfosSpeichern(username, password, port, hostnameField);
+//                TODO Hier kommt die Weiterleitung zur Aufforderung neu das Programm zu starten damit die konfig geladen werden
+            } else {
+                view.tfUser.setBorder(BorderFactory.createLineBorder(COLOR_RED, 2));
+                view.tfPort.setBorder(BorderFactory.createLineBorder(COLOR_RED, 2));
+                view.pfPass.setBorder(BorderFactory.createLineBorder(COLOR_RED, 2));
+                view.tfHost.setBorder(BorderFactory.createLineBorder(COLOR_RED, 2));
+            }
         };
     }
 
     private ActionListener verbindungsTest() {
         return e -> {
-            String username = view.usernameField.getText();
-            String port = view.portField.getText();
-            String password = new String(view.passwordField.getPassword());
-            String hostname = view.hostnameField.getText();
-
+            String username = view.tfUser.getText();
+            String port = view.tfPort.getText();
+            String password = new String(view.pfPass.getPassword());
+            String hostname = view.tfHost.getText();
             boolean erfolgreich = dbKonfigurierenService.verbindungTesten(username, password, port, hostname);
 
             if (erfolgreich) {
-                view.usernameField.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
-                view.portField.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
-                view.passwordField.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
-                view.hostnameField.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
+                view.tfUser.setBorder(BorderFactory.createLineBorder(COLOR_GREEN, 2));
+                view.tfPort.setBorder(BorderFactory.createLineBorder(COLOR_GREEN, 2));
+                view.pfPass.setBorder(BorderFactory.createLineBorder(COLOR_GREEN, 2));
+                view.tfHost.setBorder(BorderFactory.createLineBorder(COLOR_GREEN, 2));
             } else {
-                view.usernameField.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-                view.portField.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-                view.passwordField.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-                view.hostnameField.setBorder(BorderFactory.createLineBorder(Color.red, 2));
+                view.tfUser.setBorder(BorderFactory.createLineBorder(COLOR_RED, 2));
+                view.tfPort.setBorder(BorderFactory.createLineBorder(COLOR_RED, 2));
+                view.pfPass.setBorder(BorderFactory.createLineBorder(COLOR_RED, 2));
+                view.tfHost.setBorder(BorderFactory.createLineBorder(COLOR_RED, 2));
             }
         };
     }
