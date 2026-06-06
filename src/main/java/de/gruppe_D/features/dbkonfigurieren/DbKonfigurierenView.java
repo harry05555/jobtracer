@@ -27,6 +27,7 @@ public class DbKonfigurierenView extends JPanel {
         JLabel HeadText = createHeadTextLabel("Datenbank & Setup");
         pfPass.setBackground(INPUT_BG);
         pfPass.setForeground(TEXT_WHITE);
+        pfPass.setCaretColor(TEXT_WHITE);
         pfPass.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(COLOR_DARK_GRAY), new EmptyBorder(5, 8, 5, 8)));
         pfPass.setMaximumSize(new Dimension(260, 35));
 
