@@ -4,6 +4,8 @@ import de.gruppe_D.app.MainFrame;
 import de.gruppe_D.app.Router;
 import de.gruppe_D.features.auth.AuthService;
 import de.gruppe_D.features.auth.infrastructure.AuthRepository;
+import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
+import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenRepository;
 
 import javax.sql.DataSource;
 
@@ -12,7 +14,9 @@ import javax.sql.DataSource;
 public class AppConfig {
     private MainFrame mainFrame;
     private AuthService authService;
+    private DbKonfigurierenService dbKonfigurierenService;
     private AuthRepository authRepository;
+    private DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository;
 
     // Repository
     public AuthRepository authRepository() {
@@ -20,6 +24,13 @@ public class AppConfig {
             authRepository = new AuthRepository(databaseConnection());
         }
         return authRepository;
+    }
+
+    public DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository() {
+        if (dbKonfigurierenRepository == null) {
+            dbKonfigurierenRepository = new DateiSpeichernDbKonfigurierenRepository();
+        }
+        return dbKonfigurierenRepository;
     }
 
     // Service
@@ -30,10 +41,17 @@ public class AppConfig {
         return authService;
     }
 
+    public DbKonfigurierenService dbKonfigurierenService() {
+        if (dbKonfigurierenService == null) {
+            dbKonfigurierenService = new DbKonfigurierenService(dbKonfigurierenRepository());
+        }
+        return dbKonfigurierenService;
+    }
+
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService());
+        return new Router(mainFrame(), authService(), dbKonfigurierenService());
     }
 
     public MainFrame mainFrame() {
