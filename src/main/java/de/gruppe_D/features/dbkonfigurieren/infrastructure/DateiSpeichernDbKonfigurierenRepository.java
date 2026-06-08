@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class DateiSpeichernDbKonfigurierenRepository implements LokalDbKonfigurierenRepository {
@@ -27,15 +28,15 @@ public class DateiSpeichernDbKonfigurierenRepository implements LokalDbKonfiguri
         if (os.contains("win")) {
 
             String appData = System.getenv("APPDATA");
-            configDir = Path.of(appData, "jobtracer");
+            configDir = Paths.get(appData, "jobtracer");
 
         } else if (os.contains("mac")) {
 
-            configDir = Path.of(home, "Library", "Application Support", "jobtracer");
+            configDir = Paths.get(home, "Library", "Application Support", "jobtracer");
 
         } else {
 
-            configDir = Path.of(home, ".config", "jobtracer");
+            configDir = Paths.get(home, ".config", "jobtracer");
         }
 
         try {

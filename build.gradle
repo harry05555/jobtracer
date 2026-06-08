@@ -1,22 +1,51 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'com.gradleup.shadow' version '8.3.5'
 }
 
 group = 'de.gruppe_D'
-version = '1.0-SNAPSHOT'
+version = '1.0.0'
 
 repositories {
     mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 8
+    options.encoding = 'UTF-8'
 }
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation("com.zaxxer:HikariCP:7.0.2")
+    implementation("com.zaxxer:HikariCP:4.0.3")
     implementation("com.mysql:mysql-connector-j:9.7.0")
+}
+
+application {
+    mainClass = 'de.gruppe_D.Main'
 }
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes('Main-Class': application.mainClass.get())
+    }
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    manifest {
+        attributes('Main-Class': application.mainClass.get())
+    }
 }
