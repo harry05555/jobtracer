@@ -26,14 +26,11 @@ public class ErinnerungEinstellenController {
     private ActionListener btnBack() {
         return e -> {
             //        TODO hier kommt der Router für die view für die PDF Einstellung
-            System.out.println("btnBack");
         };
     }
 
     private ActionListener btnFinish(Container parent) {
         return e -> {
-
-            System.out.println("btnFinish");
 
             String input = view.tfReminder.getText().trim();
             if (input.isEmpty()) {
