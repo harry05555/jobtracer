@@ -14,8 +14,6 @@ public class ErinnerungEinstellenView extends JPanel {
     public JLabel subtitle = new JLabel("Nach wie vielen Wochen willst du dich noch einmal melden?");
     public JLabel title = createHeadTextLabel("Ersteinrichtung (2/2)");
 
-    public Container panel = getParent();
-
     public ErinnerungEinstellenView() {
         setLayout(new GridBagLayout());
         setBackground(BG_DARK);

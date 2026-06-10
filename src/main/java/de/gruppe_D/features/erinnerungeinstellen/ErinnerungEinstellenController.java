@@ -8,19 +8,19 @@ import java.awt.event.ActionListener;
 
 public class ErinnerungEinstellenController {
     private final ErinnerungEinstellenView view;
-    private final ErinnerungEinstellenService ErinnerungEinstellenService;
+    private final ErinnerungEinstellenService erinnerungEinstellenService;
     private final Router router;
 
-    public ErinnerungEinstellenController(ErinnerungEinstellenView view, ErinnerungEinstellenService ErinnerungEinstellenService, Router router) {
+    public ErinnerungEinstellenController(ErinnerungEinstellenView view, ErinnerungEinstellenService erinnerungEinstellenService, Router router) {
         this.view = view;
-        this.ErinnerungEinstellenService = ErinnerungEinstellenService;
+        this.erinnerungEinstellenService = erinnerungEinstellenService;
         this.router = router;
         init();
     }
 
     private void init() {
         view.btnBack.addActionListener(btnBack());
-        view.btnFinish.addActionListener(btnFinish(view.panel));
+        view.btnFinish.addActionListener(btnFinish());
     }
 
     private ActionListener btnBack() {
@@ -29,19 +29,19 @@ public class ErinnerungEinstellenController {
         };
     }
 
-    private ActionListener btnFinish(Container parent) {
+    private ActionListener btnFinish() {
         return e -> {
 
             String input = view.tfReminder.getText().trim();
             if (input.isEmpty()) {
-                JOptionPane.showMessageDialog(parent, "Bitte gib eine Zahl ein (z.B. 2).", "Eingabe fehlt", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(view, "Bitte gib eine Zahl ein (z.B. 2).", "Eingabe fehlt", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             try {
-                ErinnerungEinstellenService.save(Long.parseLong(input));
+                erinnerungEinstellenService.save(Long.parseLong(input));
                 //        TODO hier kommt der Router für die view für die view "fragen Lebenslauf, Anschreiben und allen Bewerbungsunterlagen hochladen will"
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(parent, "Bitte nur ganze Zahlen eingeben!", "Fehler", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view, "Bitte nur ganze Zahlen eingeben!", "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         };
     }
