@@ -2,21 +2,21 @@ package de.gruppe_D.features.dbkonfigurieren;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import de.gruppe_D.features.dbkonfigurieren.interfaces.LokalDbKonfigurierenRepository;
+import de.gruppe_D.features.dbkonfigurieren.interfaces.LokalDbKonfigurierenDAO;
 
 import java.sql.Connection;
 
 public class DbKonfigurierenService {
 
-    private final LokalDbKonfigurierenRepository dbKonfigurierenRepository;
+    private final LokalDbKonfigurierenDAO dbKonfigurierenDao;
 
-    public DbKonfigurierenService(LokalDbKonfigurierenRepository dbKonfigurierenRepository) {
-        this.dbKonfigurierenRepository = dbKonfigurierenRepository;
+    public DbKonfigurierenService(LokalDbKonfigurierenDAO dbKonfigurierenDao) {
+        this.dbKonfigurierenDao = dbKonfigurierenDao;
     }
 
     public void DBInfosSpeichern(String username, String password, String port, String hostname) {
         DbKonfigurierenModel konfigurieren = new DbKonfigurierenModel(username, password, port, hostname);
-        dbKonfigurierenRepository.saveDatei(konfigurieren);
+        dbKonfigurierenDao.saveDatei(konfigurieren);
     }
 
     public boolean verbindungTesten(String username, String password, String port, String hostname) {

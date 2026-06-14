@@ -5,7 +5,7 @@ import de.gruppe_D.app.Router;
 import de.gruppe_D.features.auth.AuthService;
 import de.gruppe_D.features.auth.infrastructure.AuthRepository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
-import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenRepository;
+import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenDaoFileImpl;
 
 import javax.sql.DataSource;
 
@@ -16,7 +16,7 @@ public class AppConfig {
     private AuthService authService;
     private DbKonfigurierenService dbKonfigurierenService;
     private AuthRepository authRepository;
-    private DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository;
+    private DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenFileImpl;
 
     // Repository
     public AuthRepository authRepository() {
@@ -26,11 +26,11 @@ public class AppConfig {
         return authRepository;
     }
 
-    public DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository() {
-        if (dbKonfigurierenRepository == null) {
-            dbKonfigurierenRepository = new DateiSpeichernDbKonfigurierenRepository();
+    public DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenDao() {
+        if (dbKonfigurierenFileImpl == null) {
+            dbKonfigurierenFileImpl = new DateiSpeichernDbKonfigurierenDaoFileImpl();
         }
-        return dbKonfigurierenRepository;
+        return dbKonfigurierenFileImpl;
     }
 
     // Service
@@ -43,7 +43,7 @@ public class AppConfig {
 
     public DbKonfigurierenService dbKonfigurierenService() {
         if (dbKonfigurierenService == null) {
-            dbKonfigurierenService = new DbKonfigurierenService(dbKonfigurierenRepository());
+            dbKonfigurierenService = new DbKonfigurierenService(dbKonfigurierenDao());
         }
         return dbKonfigurierenService;
     }
