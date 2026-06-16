@@ -33,6 +33,13 @@ public class AppConfig {
         return dbKonfigurierenFileImpl;
     }
 
+    public ErinnerungEinstellenRepository erinnerungEinstellenRepository() {
+        if (erinnerungEinstellenRepository == null) {
+            erinnerungEinstellenRepository = new ErinnerungEinstellenRepository(databaseConnection());
+        }
+        return erinnerungEinstellenRepository;
+    }
+
     // Service
     public AuthService authService() {
         if (authService == null) {
@@ -48,10 +55,17 @@ public class AppConfig {
         return dbKonfigurierenService;
     }
 
+    public ErinnerungEinstellenService ErinnerungEinstellenServiceService() {
+        if (erinnerungEinstellenService == null) {
+            erinnerungEinstellenService = new ErinnerungEinstellenService(erinnerungEinstellenRepository());
+        }
+        return erinnerungEinstellenService;
+    }
+
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService(), dbKonfigurierenService());
+        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService());
     }
 
     public MainFrame mainFrame() {
