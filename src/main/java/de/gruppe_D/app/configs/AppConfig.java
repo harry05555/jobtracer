@@ -6,6 +6,8 @@ import de.gruppe_D.features.auth.AuthService;
 import de.gruppe_D.features.auth.infrastructure.AuthRepository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
 import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenDaoFileImpl;
+import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
+import de.gruppe_D.features.erinnerungeinstellen.infrastructure.ErinnerungEinstellenRepository;
 
 import javax.sql.DataSource;
 
@@ -15,8 +17,10 @@ public class AppConfig {
     private MainFrame mainFrame;
     private AuthService authService;
     private DbKonfigurierenService dbKonfigurierenService;
+    private ErinnerungEinstellenService erinnerungEinstellenService;
     private AuthRepository authRepository;
     private DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenFileImpl;
+    private ErinnerungEinstellenRepository erinnerungEinstellenRepository;
 
     // Repository
     public AuthRepository authRepository() {
