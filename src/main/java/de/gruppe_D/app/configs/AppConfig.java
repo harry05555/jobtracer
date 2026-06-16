@@ -6,6 +6,8 @@ import de.gruppe_D.features.auth.AuthService;
 import de.gruppe_D.features.auth.infrastructure.AuthRepository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
 import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenRepository;
+import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
+import de.gruppe_D.features.erinnerungeinstellen.infrastructure.ErinnerungEinstellenRepository;
 
 import javax.sql.DataSource;
 
@@ -17,6 +19,8 @@ public class AppConfig {
     private DbKonfigurierenService dbKonfigurierenService;
     private AuthRepository authRepository;
     private DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository;
+    private ErinnerungEinstellenService erinnerungEinstellenService;
+    private ErinnerungEinstellenRepository erinnerungEinstellenRepository;
 
     // Repository
     public AuthRepository authRepository() {
@@ -31,6 +35,13 @@ public class AppConfig {
             dbKonfigurierenRepository = new DateiSpeichernDbKonfigurierenRepository();
         }
         return dbKonfigurierenRepository;
+    }
+
+    public ErinnerungEinstellenRepository erinnerungEinstellenRepository() {
+        if (erinnerungEinstellenRepository == null) {
+            erinnerungEinstellenRepository = new ErinnerungEinstellenRepository(databaseConnection());
+        }
+        return erinnerungEinstellenRepository;
     }
 
     // Service
@@ -48,10 +59,17 @@ public class AppConfig {
         return dbKonfigurierenService;
     }
 
+    public ErinnerungEinstellenService ErinnerungEinstellenServiceService() {
+        if (erinnerungEinstellenService == null) {
+            erinnerungEinstellenService = new ErinnerungEinstellenService(erinnerungEinstellenRepository());
+        }
+        return erinnerungEinstellenService;
+    }
+
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService(), dbKonfigurierenService());
+        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService());
     }
 
     public MainFrame mainFrame() {
