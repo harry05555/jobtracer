@@ -1,7 +1,7 @@
 package de.gruppe_D.features.dbkonfigurieren.infrastructure;
 
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenModel;
-import de.gruppe_D.features.dbkonfigurieren.interfaces.LokalDbKonfigurierenRepository;
+import de.gruppe_D.features.dbkonfigurieren.interfaces.LokalDbKonfigurierenDAO;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,10 +11,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-public class DateiSpeichernDbKonfigurierenRepository implements LokalDbKonfigurierenRepository {
+public class DateiSpeichernDbKonfigurierenDaoFileImpl implements LokalDbKonfigurierenDAO {
     private final Path configFile;
 
-    public DateiSpeichernDbKonfigurierenRepository() {
+    public DateiSpeichernDbKonfigurierenDaoFileImpl() {
         this.configFile = resolveConfigPath();
     }
 
