@@ -54,4 +54,27 @@ public class UIUtils {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         return title;
     }
+    public static JComboBox<String> createDropdown(String[] items) {
+        JComboBox<String> cb = new JComboBox<>(items);
+        cb.setBackground(INPUT_BG);
+        cb.setForeground(TEXT_WHITE);
+        cb.setMaximumSize(new Dimension(260, 35));
+        return cb;
+    }
+
+    public static JComboBox<String> createEditableDropdown(String[] items) {
+        JComboBox<String> cb = new JComboBox<>(items);
+        cb.setMaximumSize(new Dimension(260, 35));
+        cb.setEditable(true);
+        Component editor = cb.getEditor().getEditorComponent();
+        if (editor instanceof JTextField) {
+            JTextField tf = (JTextField) editor;
+            tf.setBackground(INPUT_BG);
+            tf.setForeground(TEXT_WHITE);
+            tf.setCaretColor(TEXT_WHITE);
+            tf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(COLOR_DARK_GRAY), new EmptyBorder(5, 8, 5, 8)));
+        }
+        return cb;
+    }
 }
+

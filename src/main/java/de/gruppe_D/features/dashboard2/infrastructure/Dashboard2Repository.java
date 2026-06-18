@@ -1,66 +1,37 @@
 package de.gruppe_D.features.dashboard2.infrastructure;
 
-import de.gruppe_D.features.dashboard2.Dashboard2Mapper;
-import de.gruppe_D.features.dashboard2.Dashboard2Model;
-import de.gruppe_D.features.dashboard2.interfaces.JdbcDashboard2Repository;
-
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Dashboard2Repository implements JdbcDashboard2Repository {
-    private final Map<String, Dashboard2Model> users = new HashMap<>();
+public class Dashboard2Repository {
 
     private final DataSource dataSource;
 
+    // Erwartet DataSource, um die AppConfig glücklich zu machen
     public Dashboard2Repository(DataSource dataSource) {
         this.dataSource = dataSource;
-        users.put("admin", new Dashboard2Model(1L, "admin", "1234"));
     }
 
-    @Override
-    public Dashboard2Model findByUsername(String username) {
-        return users.get(username);
-    }
+    // Liest temporär die CSV, bis eure Datenbank-Tabellen stehen
+    public List<String[]> fetchRawApplicationData() {
+        List<String[]> rawData = new ArrayList<>();
+        try {
+            File f = new File("bewerbungen_data.csv");
+            if (!f.exists()) return rawData;
 
-    @Override
-    public Dashboard2Model findByUsernameInDB(String username) {
-        String sql = "SELECT * FROM users WHERE username = ?";
-
-        try (Connection con = dataSource.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, username);
-
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return Dashboard2Mapper.toUser(rs);
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String line;
+            while ((line = br.readLine()) != null) {
+                rawData.add(line.split(";;;"));
             }
-
-            return null;
-
-        } catch (SQLException e) {
-            throw new RuntimeException("DB Fehler", e);
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-
-    @Override
-    public void save(Dashboard2Model authModel) {
-        String sql = "INSERT INTO users(username, password) VALUES (?, ?)";
-
-        try (Connection con = dataSource.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, authModel.getUsername());
-            stmt.setString(2, "hashed-password");
-
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("DB Fehler", e);
-        }
+        return rawData;
     }
 }
