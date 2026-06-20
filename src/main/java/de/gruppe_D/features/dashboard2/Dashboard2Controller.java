@@ -19,6 +19,7 @@ public class Dashboard2Controller {
 
     private void initListeners() {
         view.btnNavDashboard.addActionListener(e -> router.showDashboard2());
+        view.btnNavUebersicht.addActionListener(e -> router.showUebersicht()); // <-- HIER AKTIVIERT
         view.btnLogout.addActionListener(e -> router.showAuth());
     }
 

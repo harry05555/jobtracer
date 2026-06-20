@@ -11,18 +11,23 @@ import de.gruppe_D.features.dashboard2.Dashboard2View;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenController;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenView;
+import de.gruppe_D.features.uebersicht.UebersichtController;
+import de.gruppe_D.features.uebersicht.UebersichtService;
+import de.gruppe_D.features.uebersicht.UebersichtView;
 
 public class Router {
     private final MainFrame frame;
     private final AuthService authService;
     private final Dashboard2Service Dashboard2Service;
     private final DbKonfigurierenService dbKonfigurierenService;
+    private final UebersichtService uebersichtService;
 
-    public Router(MainFrame frame, AuthService authService,DbKonfigurierenService dbKonfigurierenService, Dashboard2Service dashboard2Service) {
+    public Router(MainFrame frame, AuthService authService,DbKonfigurierenService dbKonfigurierenService, Dashboard2Service dashboard2Service, UebersichtService uebersichtService) {
         this.frame = frame;
         this.authService = authService;
         Dashboard2Service = dashboard2Service;
         this.dbKonfigurierenService = dbKonfigurierenService;
+        this.uebersichtService = uebersichtService;
     }
 
     public void showAuth() {
@@ -34,6 +39,15 @@ public class Router {
     public void showDashboard2() {
         Dashboard2View view = new Dashboard2View();
         new Dashboard2Controller(view, Dashboard2Service, this);
+        frame.setView(view);
+    }
+
+    public void showUebersicht() {
+        frame.setSize(1600, 900);
+        frame.setLocationRelativeTo(null);
+        UebersichtView view = new UebersichtView();
+        // Jetzt kennt der Router uebersichtService und kann ihn übergeben!
+        new UebersichtController(view, uebersichtService, this);
         frame.setView(view);
     }
 

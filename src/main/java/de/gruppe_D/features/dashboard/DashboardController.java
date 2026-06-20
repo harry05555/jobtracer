@@ -14,6 +14,6 @@ public class DashboardController {
     }
 
     private void init() {
-        view.logoutButton.addActionListener(e -> router.showAuth());
+       // view.logoutButton.addActionListener(e -> router.showAuth());
     }
 }

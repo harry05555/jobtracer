@@ -69,7 +69,7 @@ public class AppConfig {
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService(), dbKonfigurierenService(), Dashboard2Service());
+        return new Router(mainFrame(), authService(), dbKonfigurierenService(), Dashboard2Service(), uebersichtService());
     }
 
     public MainFrame mainFrame() {
@@ -82,5 +82,22 @@ public class AppConfig {
     // Infrastruktur
     private DataSource databaseConnection() {
         return DatabaseConfig.getDataSource();
+    }
+
+    private de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository uebersichtRepository;
+    private de.gruppe_D.features.uebersicht.UebersichtService uebersichtService;
+
+    public de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository uebersichtRepository() {
+        if (uebersichtRepository == null) {
+            uebersichtRepository = new de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository(databaseConnection());
+        }
+        return uebersichtRepository;
+    }
+
+    public de.gruppe_D.features.uebersicht.UebersichtService uebersichtService() {
+        if (uebersichtService == null) {
+            uebersichtService = new de.gruppe_D.features.uebersicht.UebersichtService(uebersichtRepository());
+        }
+        return uebersichtService;
     }
 }
