@@ -4,6 +4,8 @@ import de.gruppe_D.app.MainFrame;
 import de.gruppe_D.app.Router;
 import de.gruppe_D.features.auth.AuthService;
 import de.gruppe_D.features.auth.infrastructure.AuthRepository;
+import de.gruppe_D.features.dashboard2.Dashboard2Service;
+import de.gruppe_D.features.dashboard2.infrastructure.Dashboard2Repository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
 import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenDaoFileImpl;
 import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
@@ -19,6 +21,9 @@ public class AppConfig {
     private DbKonfigurierenService dbKonfigurierenService;
     private ErinnerungEinstellenService erinnerungEinstellenService;
     private AuthRepository authRepository;
+    private Dashboard2Service Dashboard2Service;
+    private Dashboard2Repository Dashboard2Repository;
+    private DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository;
     private DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenFileImpl;
     private ErinnerungEinstellenRepository erinnerungEinstellenRepository;
 
@@ -30,6 +35,16 @@ public class AppConfig {
         return authRepository;
     }
 
+    public Dashboard2Repository Dashboard2Repository() {
+        if (Dashboard2Repository == null) {
+            Dashboard2Repository = new Dashboard2Repository(databaseConnection());
+        }
+        return Dashboard2Repository;
+    }
+
+    public DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository() {
+        if (dbKonfigurierenRepository == null) {
+            dbKonfigurierenRepository = new DateiSpeichernDbKonfigurierenRepository();
     public DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenDao() {
         if (dbKonfigurierenFileImpl == null) {
             dbKonfigurierenFileImpl = new DateiSpeichernDbKonfigurierenDaoFileImpl();
@@ -52,6 +67,13 @@ public class AppConfig {
         return authService;
     }
 
+    public Dashboard2Service Dashboard2Service() {
+        if (Dashboard2Service == null) {
+            Dashboard2Service = new Dashboard2Service(Dashboard2Repository());
+        }
+        return Dashboard2Service;
+    }
+
     public DbKonfigurierenService dbKonfigurierenService() {
         if (dbKonfigurierenService == null) {
             dbKonfigurierenService = new DbKonfigurierenService(dbKonfigurierenDao());
@@ -69,7 +91,7 @@ public class AppConfig {
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService());
+        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService(), Dashboard2Service(), uebersichtService());
     }
 
     public MainFrame mainFrame() {
@@ -82,5 +104,22 @@ public class AppConfig {
     // Infrastruktur
     private DataSource databaseConnection() {
         return DatabaseConfig.getDataSource();
+    }
+
+    private de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository uebersichtRepository;
+    private de.gruppe_D.features.uebersicht.UebersichtService uebersichtService;
+
+    public de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository uebersichtRepository() {
+        if (uebersichtRepository == null) {
+            uebersichtRepository = new de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository(databaseConnection());
+        }
+        return uebersichtRepository;
+    }
+
+    public de.gruppe_D.features.uebersicht.UebersichtService uebersichtService() {
+        if (uebersichtService == null) {
+            uebersichtService = new de.gruppe_D.features.uebersicht.UebersichtService(uebersichtRepository());
+        }
+        return uebersichtService;
     }
 }
