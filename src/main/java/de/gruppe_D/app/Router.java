@@ -24,17 +24,15 @@ public class Router {
     private final Dashboard2Service Dashboard2Service;
     private final DbKonfigurierenService dbKonfigurierenService;
     private final UebersichtService uebersichtService;
-
-    public Router(MainFrame frame, AuthService authService,DbKonfigurierenService dbKonfigurierenService, Dashboard2Service dashboard2Service, UebersichtService uebersichtService) {
     private final ErinnerungEinstellenService erinnerungEinstellenService;
 
-    public Router(MainFrame frame, AuthService authService, DbKonfigurierenService dbKonfigurierenService, ErinnerungEinstellenService erinnerungEinstellenService) {
+    public Router(MainFrame frame, AuthService authService, DbKonfigurierenService dbKonfigurierenService, ErinnerungEinstellenService erinnerungEinstellenService, Dashboard2Service dashboard2Service, UebersichtService uebersichtService) {
         this.frame = frame;
         this.authService = authService;
         Dashboard2Service = dashboard2Service;
         this.dbKonfigurierenService = dbKonfigurierenService;
-        this.uebersichtService = uebersichtService;
         this.erinnerungEinstellenService = erinnerungEinstellenService;
+        this.uebersichtService = uebersichtService;
     }
 
     public void showAuth() {
@@ -68,8 +66,9 @@ public class Router {
         DbKonfigurierenView view = new DbKonfigurierenView();
         new DbKonfigurierenController(view, dbKonfigurierenService, this);
         frame.setView(view);
+    }
 
-    }   public void showErinnerungEinstellen() {
+    public void showErinnerungEinstellen() {
         ErinnerungEinstellenView view = new ErinnerungEinstellenView();
         new ErinnerungEinstellenController(view, erinnerungEinstellenService, this);
         frame.setView(view);
