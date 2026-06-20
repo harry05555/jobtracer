@@ -14,6 +14,9 @@ import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenView;
 import de.gruppe_D.features.uebersicht.UebersichtController;
 import de.gruppe_D.features.uebersicht.UebersichtService;
 import de.gruppe_D.features.uebersicht.UebersichtView;
+import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenController;
+import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
+import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenView;
 
 public class Router {
     private final MainFrame frame;
@@ -23,11 +26,15 @@ public class Router {
     private final UebersichtService uebersichtService;
 
     public Router(MainFrame frame, AuthService authService,DbKonfigurierenService dbKonfigurierenService, Dashboard2Service dashboard2Service, UebersichtService uebersichtService) {
+    private final ErinnerungEinstellenService erinnerungEinstellenService;
+
+    public Router(MainFrame frame, AuthService authService, DbKonfigurierenService dbKonfigurierenService, ErinnerungEinstellenService erinnerungEinstellenService) {
         this.frame = frame;
         this.authService = authService;
         Dashboard2Service = dashboard2Service;
         this.dbKonfigurierenService = dbKonfigurierenService;
         this.uebersichtService = uebersichtService;
+        this.erinnerungEinstellenService = erinnerungEinstellenService;
     }
 
     public void showAuth() {
@@ -60,6 +67,11 @@ public class Router {
     public void showDbKonfigurieren() {
         DbKonfigurierenView view = new DbKonfigurierenView();
         new DbKonfigurierenController(view, dbKonfigurierenService, this);
+        frame.setView(view);
+
+    }   public void showErinnerungEinstellen() {
+        ErinnerungEinstellenView view = new ErinnerungEinstellenView();
+        new ErinnerungEinstellenController(view, erinnerungEinstellenService, this);
         frame.setView(view);
     }
 }

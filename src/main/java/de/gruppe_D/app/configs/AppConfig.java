@@ -7,7 +7,9 @@ import de.gruppe_D.features.auth.infrastructure.AuthRepository;
 import de.gruppe_D.features.dashboard2.Dashboard2Service;
 import de.gruppe_D.features.dashboard2.infrastructure.Dashboard2Repository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
-import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenRepository;
+import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenDaoFileImpl;
+import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
+import de.gruppe_D.features.erinnerungeinstellen.infrastructure.ErinnerungEinstellenRepository;
 
 import javax.sql.DataSource;
 
@@ -17,10 +19,13 @@ public class AppConfig {
     private MainFrame mainFrame;
     private AuthService authService;
     private DbKonfigurierenService dbKonfigurierenService;
+    private ErinnerungEinstellenService erinnerungEinstellenService;
     private AuthRepository authRepository;
     private Dashboard2Service Dashboard2Service;
     private Dashboard2Repository Dashboard2Repository;
     private DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository;
+    private DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenFileImpl;
+    private ErinnerungEinstellenRepository erinnerungEinstellenRepository;
 
     // Repository
     public AuthRepository authRepository() {
@@ -40,8 +45,18 @@ public class AppConfig {
     public DateiSpeichernDbKonfigurierenRepository dbKonfigurierenRepository() {
         if (dbKonfigurierenRepository == null) {
             dbKonfigurierenRepository = new DateiSpeichernDbKonfigurierenRepository();
+    public DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenDao() {
+        if (dbKonfigurierenFileImpl == null) {
+            dbKonfigurierenFileImpl = new DateiSpeichernDbKonfigurierenDaoFileImpl();
         }
-        return dbKonfigurierenRepository;
+        return dbKonfigurierenFileImpl;
+    }
+
+    public ErinnerungEinstellenRepository erinnerungEinstellenRepository() {
+        if (erinnerungEinstellenRepository == null) {
+            erinnerungEinstellenRepository = new ErinnerungEinstellenRepository(databaseConnection());
+        }
+        return erinnerungEinstellenRepository;
     }
 
     // Service
@@ -61,15 +76,22 @@ public class AppConfig {
 
     public DbKonfigurierenService dbKonfigurierenService() {
         if (dbKonfigurierenService == null) {
-            dbKonfigurierenService = new DbKonfigurierenService(dbKonfigurierenRepository());
+            dbKonfigurierenService = new DbKonfigurierenService(dbKonfigurierenDao());
         }
         return dbKonfigurierenService;
+    }
+
+    public ErinnerungEinstellenService ErinnerungEinstellenServiceService() {
+        if (erinnerungEinstellenService == null) {
+            erinnerungEinstellenService = new ErinnerungEinstellenService(erinnerungEinstellenRepository());
+        }
+        return erinnerungEinstellenService;
     }
 
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService(), dbKonfigurierenService(), Dashboard2Service(), uebersichtService());
+        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService(), Dashboard2Service(), uebersichtService());
     }
 
     public MainFrame mainFrame() {
