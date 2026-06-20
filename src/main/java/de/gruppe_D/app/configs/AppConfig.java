@@ -6,6 +6,8 @@ import de.gruppe_D.features.auth.AuthService;
 import de.gruppe_D.features.auth.infrastructure.AuthRepository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
 import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenDaoFileImpl;
+import de.gruppe_D.features.documentlocation.DocumentLocationService;
+import de.gruppe_D.features.documentlocation.infrastructure.DocumentLocationRepository;
 import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
 import de.gruppe_D.features.erinnerungeinstellen.infrastructure.ErinnerungEinstellenRepository;
 
@@ -18,9 +20,11 @@ public class AppConfig {
     private AuthService authService;
     private DbKonfigurierenService dbKonfigurierenService;
     private ErinnerungEinstellenService erinnerungEinstellenService;
+    private DocumentLocationService documentLocationService;
     private AuthRepository authRepository;
     private DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenFileImpl;
     private ErinnerungEinstellenRepository erinnerungEinstellenRepository;
+    private DocumentLocationRepository documentLocationRepository;
 
     // Repository
     public AuthRepository authRepository() {
@@ -44,6 +48,14 @@ public class AppConfig {
         return erinnerungEinstellenRepository;
     }
 
+    public DocumentLocationRepository documentLocationRepository() {
+        if (documentLocationRepository == null) {
+            documentLocationRepository = new DocumentLocationRepository(databaseConnection());
+        }
+        return documentLocationRepository;
+    }
+
+
     // Service
     public AuthService authService() {
         if (authService == null) {
@@ -66,10 +78,18 @@ public class AppConfig {
         return erinnerungEinstellenService;
     }
 
+    public DocumentLocationService documentLocationService() {
+        if (documentLocationService == null) {
+            documentLocationService = new DocumentLocationService(documentLocationRepository());
+        }
+        return documentLocationService;
+    }
+
+
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService());
+        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService(), documentLocationService());
     }
 
     public MainFrame mainFrame() {
