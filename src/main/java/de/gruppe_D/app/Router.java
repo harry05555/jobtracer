@@ -48,8 +48,6 @@ public class Router {
     }
 
     public void showUebersicht() {
-        frame.setSize(1600, 900);
-        frame.setLocationRelativeTo(null);
         UebersichtView view = new UebersichtView();
         // Jetzt kennt der Router uebersichtService und kann ihn übergeben!
         new UebersichtController(view, uebersichtService, this);

@@ -8,11 +8,11 @@ import de.gruppe_D.features.dashboard2.Dashboard2Service;
 import de.gruppe_D.features.dashboard2.infrastructure.Dashboard2Repository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
 import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenDaoFileImpl;
-import de.gruppe_D.features.dbkonfigurieren.interfaces.LokalDbKonfigurierenDAO;
 import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
 import de.gruppe_D.features.erinnerungeinstellen.infrastructure.ErinnerungEinstellenRepository;
 import de.gruppe_D.features.uebersicht.UebersichtService;
 import de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository;
+
 import javax.sql.DataSource;
 
 //„wir nutzen eine zentrale AppConfig als einfachen Dependency Injection Container, der gleichzeitig als Factory fungiert und Singleton-Lifecycle verwaltet.“
@@ -25,9 +25,10 @@ public class AppConfig {
     private AuthRepository authRepository;
     private Dashboard2Service Dashboard2Service;
     private Dashboard2Repository Dashboard2Repository;
-    private LokalDbKonfigurierenDAO lokalDbKonfigurierenDAO;
     private DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenFileImpl;
     private ErinnerungEinstellenRepository erinnerungEinstellenRepository;
+    private UebersichtRepository uebersichtRepository;
+    private UebersichtService uebersichtService;
 
     // Repository
     public AuthRepository authRepository() {
@@ -44,13 +45,6 @@ public class AppConfig {
         return Dashboard2Repository;
     }
 
-    public LokalDbKonfigurierenDAO lokalDbKonfigurierenDAO() {
-        if (lokalDbKonfigurierenDAO == null) {
-            lokalDbKonfigurierenDAO = new DateiSpeichernDbKonfigurierenDaoFileImpl();
-        }
-        return lokalDbKonfigurierenDAO;
-    }
-
     public DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenDao() {
         if (dbKonfigurierenFileImpl == null) {
             dbKonfigurierenFileImpl = new DateiSpeichernDbKonfigurierenDaoFileImpl();
@@ -64,6 +58,13 @@ public class AppConfig {
             erinnerungEinstellenRepository = new ErinnerungEinstellenRepository(databaseConnection());
         }
         return erinnerungEinstellenRepository;
+    }
+
+    public UebersichtRepository uebersichtRepository() {
+        if (uebersichtRepository == null) {
+            uebersichtRepository = new UebersichtRepository(databaseConnection());
+        }
+        return uebersichtRepository;
     }
 
     // Service
@@ -95,6 +96,13 @@ public class AppConfig {
         return erinnerungEinstellenService;
     }
 
+    public UebersichtService uebersichtService() {
+        if (uebersichtService == null) {
+            uebersichtService = new UebersichtService(uebersichtRepository());
+        }
+        return uebersichtService;
+    }
+
     // UI
     public Router router() {
         mainFrame().setVisible(true);
@@ -111,22 +119,5 @@ public class AppConfig {
     // Infrastruktur
     private DataSource databaseConnection() {
         return DatabaseConfig.getDataSource();
-    }
-
-    private de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository uebersichtRepository;
-    private de.gruppe_D.features.uebersicht.UebersichtService uebersichtService;
-
-    public de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository uebersichtRepository() {
-        if (uebersichtRepository == null) {
-            uebersichtRepository = new de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository(databaseConnection());
-        }
-        return uebersichtRepository;
-    }
-
-    public de.gruppe_D.features.uebersicht.UebersichtService uebersichtService() {
-        if (uebersichtService == null) {
-            uebersichtService = new de.gruppe_D.features.uebersicht.UebersichtService(uebersichtRepository());
-        }
-        return uebersichtService;
     }
 }
