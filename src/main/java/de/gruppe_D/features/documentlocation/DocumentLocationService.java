@@ -10,8 +10,7 @@ public class DocumentLocationService {
         this.documentLocationRepository = userRepository;
     }
 
-    public boolean login(String username, String password) {
-        DocumentLocationModel documentLocationModel = documentLocationRepository.findByUsernameInDB(username);
-        return documentLocationModel != null && documentLocationModel.checkPassword(password);
+    public void savePath(String path) {
+        documentLocationRepository.savePath(new DocumentLocationModel(path));
     }
 }

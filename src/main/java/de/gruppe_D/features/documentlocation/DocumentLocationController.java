@@ -41,6 +41,7 @@ public class DocumentLocationController {
                 JOptionPane.showMessageDialog(view, "Bitte wähle einen gültigen und existierenden Ordner aus!", "Fehler", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            documentLocationService.savePath(path);
         };
     }
 }

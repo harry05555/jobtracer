@@ -1,24 +1,17 @@
 package de.gruppe_D.features.documentlocation;
 
 public class DocumentLocationModel {
-    private Long id;
-    private final String username;
-    private final String password;
+    private String pathLocation;
 
-    public DocumentLocationModel(Long id, String username, String password) {
-        this.id = id;
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Username darf nicht leer sein");
-        }
-        this.username = username;
-        this.password = password;
+    public DocumentLocationModel(String pathLocation) {
+        this.pathLocation = pathLocation;
     }
 
-    public boolean checkPassword(String input) {
-        return password.equals(input);
+    public String getPathLocation() {
+        return pathLocation;
     }
 
-    public String getUsername() {
-        return username;
+    public void setPathLocation(String pathLocation) {
+        this.pathLocation = pathLocation;
     }
 }
