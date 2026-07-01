@@ -2,6 +2,7 @@ package de.gruppe_D.features.documentlocation;
 
 import de.gruppe_D.app.Router;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 
 public class DocumentLocationController {
@@ -17,19 +18,15 @@ public class DocumentLocationController {
     }
 
     private void init() {
-        view.loginButton.addActionListener(login());
+        view.btnBrowse.addActionListener(fileChooser());
     }
 
-    private ActionListener login() {
+    private ActionListener fileChooser() {
         return e -> {
-            String username = view.usernameField.getText();
-            String password = new String(view.passwordField.getPassword());
-
-            if (documentLocationService.login(username, password)) {
-                router.showDashboard(); // 🔥 VIEW WECHSEL
-            } else {
-                System.out.println("Fehler!");
-                view.usernameField.setText("Fehler");
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            if (chooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
+                view.tfPath.setText(chooser.getSelectedFile().getAbsolutePath());
             }
         };
     }

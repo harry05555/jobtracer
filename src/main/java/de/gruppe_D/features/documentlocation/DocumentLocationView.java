@@ -9,9 +9,6 @@ import java.io.File;
 import static de.gruppe_D.app.utils.UIUtils.*;
 
 public class DocumentLocationView extends JPanel {
-    public JTextField usernameField = new JTextField(15);
-    public JPasswordField passwordField = new JPasswordField(15);
-    public JButton loginButton = new JButton("Login");
     public JButton btnBrowse = new JButton("📁");
     public JButton btnNext = new JButton("Weiter");
 
@@ -42,14 +39,6 @@ public class DocumentLocationView extends JPanel {
 
         styleActionButton(btnBrowse, COLOR_DARK_BLUE_GRAY, TEXT_WHITE);
         btnBrowse.setPreferredSize(new Dimension(45, 35));
-
-        btnBrowse.addActionListener(e -> {
-            JFileChooser chooser = new JFileChooser();
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                tfPath.setText(chooser.getSelectedFile().getAbsolutePath());
-            }
-        });
 
         pathPanel.add(tfPath, BorderLayout.CENTER);
         pathPanel.add(btnBrowse, BorderLayout.EAST);
