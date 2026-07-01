@@ -11,6 +11,9 @@ import de.gruppe_D.features.dashboard2.Dashboard2View;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenController;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenView;
+import de.gruppe_D.features.documentlocation.DocumentLocationController;
+import de.gruppe_D.features.documentlocation.DocumentLocationService;
+import de.gruppe_D.features.documentlocation.DocumentLocationView;
 import de.gruppe_D.features.uebersicht.UebersichtController;
 import de.gruppe_D.features.uebersicht.UebersichtService;
 import de.gruppe_D.features.uebersicht.UebersichtView;
@@ -25,13 +28,16 @@ public class Router {
     private final DbKonfigurierenService dbKonfigurierenService;
     private final UebersichtService uebersichtService;
     private final ErinnerungEinstellenService erinnerungEinstellenService;
+    private final DocumentLocationService documentLocationService;
 
-    public Router(MainFrame frame, AuthService authService, DbKonfigurierenService dbKonfigurierenService, ErinnerungEinstellenService erinnerungEinstellenService, Dashboard2Service dashboard2Service, UebersichtService uebersichtService) {
+
+    public Router(MainFrame frame, AuthService authService, DbKonfigurierenService dbKonfigurierenService, ErinnerungEinstellenService erinnerungEinstellenService, DocumentLocationService documentLocationService) {
         this.frame = frame;
         this.authService = authService;
         Dashboard2Service = dashboard2Service;
         this.dbKonfigurierenService = dbKonfigurierenService;
         this.erinnerungEinstellenService = erinnerungEinstellenService;
+        this.documentLocationService = documentLocationService;
         this.uebersichtService = uebersichtService;
     }
 
@@ -69,6 +75,12 @@ public class Router {
     public void showErinnerungEinstellen() {
         ErinnerungEinstellenView view = new ErinnerungEinstellenView();
         new ErinnerungEinstellenController(view, erinnerungEinstellenService, this);
+        frame.setView(view);
+    }
+
+    public void showDocumentLocation() {
+        DocumentLocationView view = new DocumentLocationView();
+        new DocumentLocationController(view, documentLocationService, this);
         frame.setView(view);
     }
 }

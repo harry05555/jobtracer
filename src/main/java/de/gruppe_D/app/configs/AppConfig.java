@@ -8,6 +8,8 @@ import de.gruppe_D.features.dashboard2.Dashboard2Service;
 import de.gruppe_D.features.dashboard2.infrastructure.Dashboard2Repository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
 import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenDaoFileImpl;
+import de.gruppe_D.features.documentlocation.DocumentLocationService;
+import de.gruppe_D.features.documentlocation.infrastructure.DocumentLocationRepository;
 import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
 import de.gruppe_D.features.erinnerungeinstellen.infrastructure.ErinnerungEinstellenRepository;
 import de.gruppe_D.features.uebersicht.UebersichtService;
@@ -22,11 +24,13 @@ public class AppConfig {
     private AuthService authService;
     private DbKonfigurierenService dbKonfigurierenService;
     private ErinnerungEinstellenService erinnerungEinstellenService;
+    private DocumentLocationService documentLocationService;
     private AuthRepository authRepository;
     private Dashboard2Service Dashboard2Service;
     private Dashboard2Repository Dashboard2Repository;
     private DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenFileImpl;
     private ErinnerungEinstellenRepository erinnerungEinstellenRepository;
+    private DocumentLocationRepository documentLocationRepository;
     private UebersichtRepository uebersichtRepository;
     private UebersichtService uebersichtService;
 
@@ -52,12 +56,18 @@ public class AppConfig {
         return dbKonfigurierenFileImpl;
     }
 
-
     public ErinnerungEinstellenRepository erinnerungEinstellenRepository() {
         if (erinnerungEinstellenRepository == null) {
             erinnerungEinstellenRepository = new ErinnerungEinstellenRepository(databaseConnection());
         }
         return erinnerungEinstellenRepository;
+    }
+
+    public DocumentLocationRepository documentLocationRepository() {
+        if (documentLocationRepository == null) {
+            documentLocationRepository = new DocumentLocationRepository(databaseConnection());
+        }
+        return documentLocationRepository;
     }
 
     public UebersichtRepository uebersichtRepository() {
@@ -96,17 +106,17 @@ public class AppConfig {
         return erinnerungEinstellenService;
     }
 
-    public UebersichtService uebersichtService() {
-        if (uebersichtService == null) {
-            uebersichtService = new UebersichtService(uebersichtRepository());
+    public DocumentLocationService documentLocationService() {
+        if (documentLocationService == null) {
+            documentLocationService = new DocumentLocationService(documentLocationRepository());
         }
-        return uebersichtService;
+        return documentLocationService;
     }
 
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService(), Dashboard2Service(), uebersichtService());
+        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService(), documentLocationService());
     }
 
     public MainFrame mainFrame() {
