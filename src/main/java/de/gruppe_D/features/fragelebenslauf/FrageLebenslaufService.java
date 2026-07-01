@@ -10,8 +10,7 @@ public class FrageLebenslaufService {
         this.frageLebenslaufRepository = frageLebenslaufRepository;
     }
 
-    public boolean login(String username, String password) {
-        FrageLebenslaufModel authModel = frageLebenslaufRepository.findByUsernameInDB(username);
-        return authModel != null && authModel.checkPassword(password);
+    public void benutzerinformationen(String vorname, String nachname, String adresse) {
+        frageLebenslaufRepository.save(new FrageLebenslaufModel(nachname, vorname, adresse.split(",")[0], adresse.split(",")[1], adresse.split(",")[2]));
     }
 }
