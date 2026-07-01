@@ -24,17 +24,16 @@ import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenView;
 public class Router {
     private final MainFrame frame;
     private final AuthService authService;
-    private final Dashboard2Service Dashboard2Service;
+    private final Dashboard2Service dashboard2Service;
     private final DbKonfigurierenService dbKonfigurierenService;
     private final UebersichtService uebersichtService;
     private final ErinnerungEinstellenService erinnerungEinstellenService;
     private final DocumentLocationService documentLocationService;
 
-
-    public Router(MainFrame frame, AuthService authService, DbKonfigurierenService dbKonfigurierenService, ErinnerungEinstellenService erinnerungEinstellenService, DocumentLocationService documentLocationService) {
+    public Router(MainFrame frame, AuthService authService, Dashboard2Service dashboard2Service, DbKonfigurierenService dbKonfigurierenService, ErinnerungEinstellenService erinnerungEinstellenService, DocumentLocationService documentLocationService, UebersichtService uebersichtService) {
         this.frame = frame;
         this.authService = authService;
-        Dashboard2Service = dashboard2Service;
+        this.dashboard2Service = dashboard2Service;
         this.dbKonfigurierenService = dbKonfigurierenService;
         this.erinnerungEinstellenService = erinnerungEinstellenService;
         this.documentLocationService = documentLocationService;
@@ -49,7 +48,7 @@ public class Router {
 
     public void showDashboard2() {
         Dashboard2View view = new Dashboard2View();
-        new Dashboard2Controller(view, Dashboard2Service, this);
+        new Dashboard2Controller(view, dashboard2Service, this);
         frame.setView(view);
     }
 

@@ -113,10 +113,17 @@ public class AppConfig {
         return documentLocationService;
     }
 
+    public UebersichtService uebersichtService() {
+        if (uebersichtService == null) {
+            uebersichtService = new UebersichtService(uebersichtRepository());
+        }
+        return uebersichtService;
+    }
+
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService(), dbKonfigurierenService(), ErinnerungEinstellenServiceService(), documentLocationService());
+        return new Router(mainFrame(), authService(), Dashboard2Service(), dbKonfigurierenService(), ErinnerungEinstellenServiceService(), documentLocationService(), uebersichtService());
     }
 
     public MainFrame mainFrame() {
