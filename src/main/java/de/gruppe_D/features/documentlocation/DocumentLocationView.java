@@ -47,16 +47,6 @@ public class DocumentLocationView extends JPanel {
         btnNext.setMaximumSize(new Dimension(200, 40));
         btnNext.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        btnNext.addActionListener(e -> {
-            String path = tfPath.getText().trim();
-            File checkDir = new File(path);
-            if (!checkDir.exists() || !checkDir.isDirectory()) {
-                JOptionPane.showMessageDialog(this, "Bitte wähle einen gültigen und existierenden Ordner aus!", "Fehler", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            pdfSpeicherPfad = path;
-            rootCardLayout.show(rootPanel, "SETUP_REMINDER");
-        });
 
         formBox.add(title);
         formBox.add(Box.createRigidArea(new Dimension(0, 10)));
