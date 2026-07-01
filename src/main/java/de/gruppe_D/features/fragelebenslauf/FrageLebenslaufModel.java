@@ -1,24 +1,57 @@
 package de.gruppe_D.features.fragelebenslauf;
 
 public class FrageLebenslaufModel {
-    private Long id;
-    private final String username;
-    private final String password;
+    private String name;
+    private String vorname;
+    private String strasse;
+    private String plz;
+    private String ort;
 
-    public FrageLebenslaufModel(Long id, String username, String password) {
-        this.id = id;
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Username darf nicht leer sein");
-        }
-        this.username = username;
-        this.password = password;
+    public FrageLebenslaufModel(String name, String vorname, String strasse, String plz, String ort) {
+        this.name = name;
+        this.vorname = vorname;
+        this.strasse = strasse;
+        this.plz = plz;
+        this.ort = ort;
     }
 
-    public boolean checkPassword(String input) {
-        return password.equals(input);
+    public String getName() {
+        return name;
     }
 
-    public String getUsername() {
-        return username;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVorname() {
+        return vorname;
+    }
+
+    public void setVorname(String vorname) {
+        this.vorname = vorname;
+    }
+
+    public String getStrasse() {
+        return strasse;
+    }
+
+    public void setStrasse(String strasse) {
+        this.strasse = strasse;
+    }
+
+    public String getPlz() {
+        return plz;
+    }
+
+    public void setPlz(String plz) {
+        this.plz = plz;
+    }
+
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
     }
 }

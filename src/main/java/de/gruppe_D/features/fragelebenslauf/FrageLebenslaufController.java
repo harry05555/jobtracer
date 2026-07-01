@@ -17,20 +17,12 @@ public class FrageLebenslaufController {
     }
 
     private void init() {
-        view.loginButton.addActionListener(login());
+        view.btnSave.addActionListener(benutzerinformationen());
     }
 
-    private ActionListener login() {
+    private ActionListener benutzerinformationen() {
         return e -> {
-            String username = view.usernameField.getText();
-            String password = new String(view.passwordField.getPassword());
-
-            if (frageLebenslaufService.login(username, password)) {
-                router.showDashboard(); // 🔥 VIEW WECHSEL
-            } else {
-                System.out.println("Fehler!");
-                view.usernameField.setText("Fehler");
-            }
+            frageLebenslaufService.benutzerinformationen(view.tfVorname.getText(), view.tfName.getText(), view.tfAdresse.getText());
         };
     }
 }
