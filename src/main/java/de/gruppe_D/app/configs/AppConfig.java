@@ -12,6 +12,8 @@ import de.gruppe_D.features.documentlocation.DocumentLocationService;
 import de.gruppe_D.features.documentlocation.infrastructure.DocumentLocationRepository;
 import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
 import de.gruppe_D.features.erinnerungeinstellen.infrastructure.ErinnerungEinstellenRepository;
+import de.gruppe_D.features.fragelebenslauf.FrageLebenslaufService;
+import de.gruppe_D.features.fragelebenslauf.infrastructure.FrageLebenslaufRepository;
 import de.gruppe_D.features.uebersicht.UebersichtService;
 import de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository;
 
@@ -33,6 +35,8 @@ public class AppConfig {
     private DocumentLocationRepository documentLocationRepository;
     private UebersichtRepository uebersichtRepository;
     private UebersichtService uebersichtService;
+    private FrageLebenslaufService frageLebenslaufService;
+    private FrageLebenslaufRepository frageLebenslaufRepository;
 
     // Repository
     public AuthRepository authRepository() {
@@ -75,6 +79,13 @@ public class AppConfig {
             uebersichtRepository = new UebersichtRepository(databaseConnection());
         }
         return uebersichtRepository;
+    }
+
+    public FrageLebenslaufRepository frageLebenslaufRepository() {
+        if (frageLebenslaufRepository == null) {
+            frageLebenslaufRepository = new FrageLebenslaufRepository(databaseConnection());
+        }
+        return frageLebenslaufRepository;
     }
 
     // Service
@@ -120,10 +131,17 @@ public class AppConfig {
         return uebersichtService;
     }
 
+    public FrageLebenslaufService frageLebenslaufService() {
+        if (frageLebenslaufService == null) {
+            frageLebenslaufService = new FrageLebenslaufService(frageLebenslaufRepository());
+        }
+        return frageLebenslaufService;
+    }
+
     // UI
     public Router router() {
         mainFrame().setVisible(true);
-        return new Router(mainFrame(), authService(), Dashboard2Service(), dbKonfigurierenService(), ErinnerungEinstellenServiceService(), documentLocationService(), uebersichtService());
+        return new Router(mainFrame(), authService(), Dashboard2Service(), dbKonfigurierenService(), ErinnerungEinstellenServiceService(), documentLocationService(), uebersichtService(), frageLebenslaufService());
     }
 
     public MainFrame mainFrame() {
