@@ -4,12 +4,16 @@ import de.gruppe_D.app.MainFrame;
 import de.gruppe_D.app.Router;
 import de.gruppe_D.features.auth.AuthService;
 import de.gruppe_D.features.auth.infrastructure.AuthRepository;
+import de.gruppe_D.features.dashboard2.Dashboard2Service;
+import de.gruppe_D.features.dashboard2.infrastructure.Dashboard2Repository;
 import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenService;
 import de.gruppe_D.features.dbkonfigurieren.infrastructure.DateiSpeichernDbKonfigurierenDaoFileImpl;
 import de.gruppe_D.features.documentlocation.DocumentLocationService;
 import de.gruppe_D.features.documentlocation.infrastructure.DocumentLocationRepository;
 import de.gruppe_D.features.erinnerungeinstellen.ErinnerungEinstellenService;
 import de.gruppe_D.features.erinnerungeinstellen.infrastructure.ErinnerungEinstellenRepository;
+import de.gruppe_D.features.uebersicht.UebersichtService;
+import de.gruppe_D.features.uebersicht.infrastructure.UebersichtRepository;
 
 import javax.sql.DataSource;
 
@@ -22,9 +26,13 @@ public class AppConfig {
     private ErinnerungEinstellenService erinnerungEinstellenService;
     private DocumentLocationService documentLocationService;
     private AuthRepository authRepository;
+    private Dashboard2Service Dashboard2Service;
+    private Dashboard2Repository Dashboard2Repository;
     private DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenFileImpl;
     private ErinnerungEinstellenRepository erinnerungEinstellenRepository;
     private DocumentLocationRepository documentLocationRepository;
+    private UebersichtRepository uebersichtRepository;
+    private UebersichtService uebersichtService;
 
     // Repository
     public AuthRepository authRepository() {
@@ -32,6 +40,13 @@ public class AppConfig {
             authRepository = new AuthRepository(databaseConnection());
         }
         return authRepository;
+    }
+
+    public Dashboard2Repository Dashboard2Repository() {
+        if (Dashboard2Repository == null) {
+            Dashboard2Repository = new Dashboard2Repository(databaseConnection());
+        }
+        return Dashboard2Repository;
     }
 
     public DateiSpeichernDbKonfigurierenDaoFileImpl dbKonfigurierenDao() {
@@ -55,6 +70,12 @@ public class AppConfig {
         return documentLocationRepository;
     }
 
+    public UebersichtRepository uebersichtRepository() {
+        if (uebersichtRepository == null) {
+            uebersichtRepository = new UebersichtRepository(databaseConnection());
+        }
+        return uebersichtRepository;
+    }
 
     // Service
     public AuthService authService() {
@@ -62,6 +83,13 @@ public class AppConfig {
             authService = new AuthService(authRepository());
         }
         return authService;
+    }
+
+    public Dashboard2Service Dashboard2Service() {
+        if (Dashboard2Service == null) {
+            Dashboard2Service = new Dashboard2Service(Dashboard2Repository());
+        }
+        return Dashboard2Service;
     }
 
     public DbKonfigurierenService dbKonfigurierenService() {
@@ -84,7 +112,6 @@ public class AppConfig {
         }
         return documentLocationService;
     }
-
 
     // UI
     public Router router() {

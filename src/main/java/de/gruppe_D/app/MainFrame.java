@@ -5,7 +5,7 @@ import javax.swing.*;
 public class MainFrame extends JFrame {
     public MainFrame() {
         setTitle("App");
-        setSize(400, 300);
+        setSize(1600, 900);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
