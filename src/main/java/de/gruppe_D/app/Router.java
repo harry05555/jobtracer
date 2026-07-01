@@ -14,6 +14,9 @@ import de.gruppe_D.features.dbkonfigurieren.DbKonfigurierenView;
 import de.gruppe_D.features.documentlocation.DocumentLocationController;
 import de.gruppe_D.features.documentlocation.DocumentLocationService;
 import de.gruppe_D.features.documentlocation.DocumentLocationView;
+import de.gruppe_D.features.fragelebenslauf.FrageLebenslaufController;
+import de.gruppe_D.features.fragelebenslauf.FrageLebenslaufService;
+import de.gruppe_D.features.fragelebenslauf.FrageLebenslaufView;
 import de.gruppe_D.features.uebersicht.UebersichtController;
 import de.gruppe_D.features.uebersicht.UebersichtService;
 import de.gruppe_D.features.uebersicht.UebersichtView;
@@ -29,8 +32,9 @@ public class Router {
     private final UebersichtService uebersichtService;
     private final ErinnerungEinstellenService erinnerungEinstellenService;
     private final DocumentLocationService documentLocationService;
+    private final FrageLebenslaufService frageLebenslaufService;
 
-    public Router(MainFrame frame, AuthService authService, Dashboard2Service dashboard2Service, DbKonfigurierenService dbKonfigurierenService, ErinnerungEinstellenService erinnerungEinstellenService, DocumentLocationService documentLocationService, UebersichtService uebersichtService) {
+    public Router(MainFrame frame, AuthService authService, Dashboard2Service dashboard2Service, DbKonfigurierenService dbKonfigurierenService, ErinnerungEinstellenService erinnerungEinstellenService, DocumentLocationService documentLocationService, UebersichtService uebersichtService, FrageLebenslaufService frageLebenslaufService) {
         this.frame = frame;
         this.authService = authService;
         this.dashboard2Service = dashboard2Service;
@@ -38,6 +42,7 @@ public class Router {
         this.erinnerungEinstellenService = erinnerungEinstellenService;
         this.documentLocationService = documentLocationService;
         this.uebersichtService = uebersichtService;
+        this.frageLebenslaufService = frageLebenslaufService;
     }
 
     public void showAuth() {
@@ -80,6 +85,12 @@ public class Router {
     public void showDocumentLocation() {
         DocumentLocationView view = new DocumentLocationView();
         new DocumentLocationController(view, documentLocationService, this);
+        frame.setView(view);
+    }
+
+    public void showFrageLebenslauf() {
+        FrageLebenslaufView view = new FrageLebenslaufView();
+        new FrageLebenslaufController(view, frageLebenslaufService, this);
         frame.setView(view);
     }
 }
