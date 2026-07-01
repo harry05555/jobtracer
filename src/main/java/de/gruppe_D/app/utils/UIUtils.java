@@ -3,6 +3,8 @@ package de.gruppe_D.app.utils;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class UIUtils {
     public static final Color BG_DARK = new Color(24, 25, 28);
@@ -54,6 +56,7 @@ public class UIUtils {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         return title;
     }
+
     public static JComboBox<String> createDropdown(String[] items) {
         JComboBox<String> cb = new JComboBox<>(items);
         cb.setBackground(INPUT_BG);
@@ -75,6 +78,30 @@ public class UIUtils {
             tf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(COLOR_DARK_GRAY), new EmptyBorder(5, 8, 5, 8)));
         }
         return cb;
+    }
+
+    public static void setupPlaceholder(JTextField tf, String placeholder) {
+        if (tf.getText().isEmpty()) {
+            tf.setForeground(TEXT_GREY);
+            tf.setText(placeholder);
+        }
+        tf.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (tf.getText().equals(placeholder)) {
+                    tf.setText("");
+                    tf.setForeground(TEXT_WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (tf.getText().isEmpty()) {
+                    tf.setForeground(TEXT_GREY);
+                    tf.setText(placeholder);
+                }
+            }
+        });
     }
 }
 
